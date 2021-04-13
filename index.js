@@ -14,10 +14,10 @@ const state = {
 };
 
 const pins = {
-    '1': new Gpio(1, out),
-    '2': new Gpio(2, out),
-    '3': new Gpio(3, out),
-    '4': new Gpio(4, out),
+    '1': new Gpio(1, 'out'),
+    '2': new Gpio(2, 'out'),
+    '3': new Gpio(3, 'out'),
+    '4': new Gpio(4, 'out'),
 }
   
 app.get('/', (req, res) => {
