@@ -48,10 +48,10 @@ app.listen(process.env.PORT, () =>
 setInterval(() => {
   let p = 0;
   Object.keys(state).forEach(element => {
-    if(element == '4') return;
-
-    pins[element].writeSync(Number.parseInt(state[element]));
-    p += Number.parseInt(state[element]);
+    if(element !== '4'){
+      pins[element].writeSync(Number.parseInt(state[element]));
+      p += Number.parseInt(state[element]);
+    }
   });
   let num = (p > 0) ? 1 : 0;
 
