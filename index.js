@@ -25,8 +25,9 @@ app.get('/', (req, res) => {
 });
  
 app.post('/', (req, res) => {
-  if(req.params.id){
-    state[req.params.id] = state[req.params.id] == "0" ? "1" : "0";
+  console.log(JSON.stringify(req))
+  if(req.params['id']){
+    state[req.params['id']] = state[req.params['id']] == "0" ? "1" : "0";
   } else {
 
   }
