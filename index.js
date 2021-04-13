@@ -17,7 +17,7 @@ const pins = {
     '1': new Gpio(1, 'out'),
     '2': new Gpio(2, 'out'),
     '3': new Gpio(3, 'out'),
-    power : new Gpio(4, 'out'),
+    '4' : new Gpio(4, 'out'),
 }
   
 app.get('/', (req, res) => {
@@ -27,6 +27,7 @@ app.get('/', (req, res) => {
 app.post('/', (req, res) => {
   if(req.query['id']){
     state[req.query['id']] = state[req.query['id']] == "0" ? "1" : "0";
+    state['4'] = String(getPower());
   } else {
 
   }
@@ -46,15 +47,17 @@ app.listen(process.env.PORT, () =>
 );
 
 setInterval(() => {
+  Object.keys(state).forEach(element => {
+      pins[element].writeSync(Number.parseInt(state[element]));
+  });
+},500);
+
+const getPower = () => {
   let p = 0;
   Object.keys(state).forEach(element => {
     if(element !== '4'){
-      pins[element].writeSync(Number.parseInt(state[element]));
       p += Number.parseInt(state[element]);
     }
   });
-  let num = (p > 0) ? 1 : 0;
-
-  state['4'] = String(num)
-  pins['power'].writeSync(num);
-},500);
+  return (p > 0) ? 1 : 0;
+}
