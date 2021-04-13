@@ -10,6 +10,7 @@ let state = {
     '1': '0',
     '2': '0',
     '3': '0',
+    '4': '0'
 };
 
 const pins = {
@@ -47,8 +48,13 @@ app.listen(process.env.PORT, () =>
 setInterval(() => {
   let p = 0;
   Object.keys(state).forEach(element => {
+    if(element == '4') return;
+
     pins[element].writeSync(Number.parseInt(state[element]));
     p += Number.parseInt(state[element]);
   });
-  pins['power'].writeSync(p > 0);
+  let num = (p > 0) ? 1 : 0;
+
+  state['4'] = String(num)
+  pins['power'].writeSync(num);
 },500);
