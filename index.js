@@ -14,10 +14,10 @@ let state = {
 };
 
 const pins = {
-    '1': new Gpio(1, 'out'),
-    '2': new Gpio(2, 'out'),
-    '3': new Gpio(3, 'out'),
-    '4' : new Gpio(4, 'out'),
+    '1': new Gpio(0, 'out'),
+    '2': new Gpio(1, 'out'),
+    '3': new Gpio(2, 'out'),
+    '4': new Gpio(3, 'out'),
 }
   
 app.get('/', (req, res) => {
@@ -26,8 +26,10 @@ app.get('/', (req, res) => {
  
 app.post('/', (req, res) => {
   if(req.query['id']){
-    state[req.query['id']] = state[req.query['id']] == "0" ? "1" : "0";
-    state['4'] = String(getPower());
+    if (Object.keys(state).includes(req.query['id'])){
+      state[req.query['id']] = state[req.query['id']] == "0" ? "1" : "0";
+      state['4'] = String(getPower());
+    }
   } else {
 
   }
