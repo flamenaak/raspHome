@@ -6,18 +6,17 @@ dotenv.config();
  
 const app = express();
 
-const state = {
+let state = {
     '1': '0',
     '2': '0',
     '3': '0',
-    '4': '0',
 };
 
 const pins = {
     '1': new Gpio(1, 'out'),
     '2': new Gpio(2, 'out'),
     '3': new Gpio(3, 'out'),
-    '4': new Gpio(4, 'out'),
+    power : new Gpio(4, 'out'),
 }
   
 app.get('/', (req, res) => {
@@ -46,7 +45,10 @@ app.listen(process.env.PORT, () =>
 );
 
 setInterval(() => {
+  let p = 0;
   Object.keys(state).forEach(element => {
     pins[element].writeSync(Number.parseInt(state[element]));
+    p += Number.parseInt(state[element]);
   });
+  pins['power'].writeSync(p > 0);
 },500);
