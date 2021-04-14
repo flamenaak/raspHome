@@ -33,6 +33,7 @@ app.post('/', (req, res) => {
   } else {
 
   }
+  updateToState()
   return res.send(state);
 });
  
@@ -48,11 +49,11 @@ app.listen(process.env.PORT, () =>
   console.log(`Example app listening on port ${process.env.PORT}!`),
 );
 
-setInterval(() => {
+const updateToState = () => {
   Object.keys(state).forEach(element => {
       pins[element].writeSync(Number.parseInt(state[element]));
   });
-},500);
+};
 
 const getPower = () => {
   let p = 0;
